@@ -1,5 +1,4 @@
 import {readFileSync} from 'fs'
-import {JSONSchema4} from 'json-schema'
 import {Options as $RefOptions} from 'json-schema-ref-parser'
 import {endsWith, merge} from 'lodash'
 import {dirname} from 'path'
@@ -12,6 +11,7 @@ import {parse} from './parser'
 import {dereference} from './resolver'
 import {error, stripExtension, Try} from './utils'
 import {validate} from './validator'
+import {JSONSchema} from './types/JSONSchema'
 
 export {EnumJSONSchema, JSONSchema, NamedEnumJSONSchema, CustomTypeJSONSchema} from './types/JSONSchema'
 
@@ -98,7 +98,7 @@ export function compileFromFile(filename: string, options: Partial<Options> = DE
       throw new ReferenceError(`Unable to read file "${filename}"`)
     }
   )
-  const schema = Try<JSONSchema4>(
+  const schema = Try<JSONSchema>(
     () => JSON.parse(contents.toString()),
     () => {
       throw new TypeError(`Error parsing JSON in file "${filename}"`)
@@ -107,7 +107,7 @@ export function compileFromFile(filename: string, options: Partial<Options> = DE
   return compile(schema, stripExtension(filename), {cwd: dirname(filename), ...options})
 }
 
-export async function compile(schema: JSONSchema4, name: string, options: Partial<Options> = {}): Promise<string> {
+export async function compile(schema: JSONSchema, name: string, options: Partial<Options> = {}): Promise<string> {
   const _options = merge({}, DEFAULT_OPTIONS, options)
 
   const errors = validate(schema, name)

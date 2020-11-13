@@ -1,0 +1,24 @@
+{
+  "name": "Desugars const to enum",
+  "in": {
+    "id": "foo",
+    "type": "object",
+    "properties": {
+      "something": {
+        "const": "foo bar baz"
+      }
+    },
+    "additionalProperties": true
+  },
+  "out": {
+    "id": "foo",
+    "type": "object",
+    "properties": {
+      "something": {
+        "enum": ["foo bar baz"]
+      }
+    },
+    "required": [],
+    "additionalProperties": true
+  }
+}

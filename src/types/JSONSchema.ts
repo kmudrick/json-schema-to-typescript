@@ -1,4 +1,4 @@
-import { JSONSchema4, JSONSchema4TypeName } from 'json-schema'
+import { JSONSchema4, JSONSchema4Type, JSONSchema4TypeName } from 'json-schema'
 
 export type SchemaType = 'ALL_OF' | 'UNNAMED_SCHEMA' | 'ANY' | 'ANY_OF'
   | 'BOOLEAN' | 'NAMED_ENUM' | 'NAMED_SCHEMA' | 'NULL' | 'NUMBER' | 'STRING'
@@ -16,6 +16,11 @@ export interface JSONSchema extends JSONSchema4 {
    * schema extension to support custom types
    */
   tsType?: string
+  /**
+   * support for const from draft 6
+   * @see {@link https://json-schema.org/understanding-json-schema/reference/generic.html#constant-values}
+   */
+  const?: JSONSchema4Type
 }
 
 // const SCHEMA_PROPERTIES = [
